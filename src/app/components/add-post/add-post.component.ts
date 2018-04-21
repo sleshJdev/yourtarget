@@ -33,12 +33,10 @@ export class AddPostComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.golosApiService.findTags({
-      select_tags: [GolosSettings.tagParentPermlink],
-      limit: 100,
-    }).subscribe(response => {
-      this.dropdownList = response;
-    });
+    this.golosApiService.findTags()
+      .subscribe(response => {
+        this.dropdownList = response;
+      });
   }
 
   save() {

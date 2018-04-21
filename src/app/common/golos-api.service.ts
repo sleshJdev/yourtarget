@@ -11,6 +11,29 @@ export class GolosApiService {
     golos.config.set('chain_id', '5876894a41e6361bde2e73278f07340f2eb8b41c2facd29099de9deef6cdb679');
   }
 
+  findPosts(tags) {
+    return Observable.create(subscriber => {
+      const keys = golos.auth.getPrivateKeys(
+        GolosSettings.username,
+        GolosSettings.password,
+        ['posting']);
+      const wif = keys.posting;
+
+      golos.api.getDiscussionsByCreated({
+        select_tags: [GolosSettings.postParentPermlink],
+        limit: 100,
+      }, (err, result) => {
+        if (!result || !result.length) {
+          subscriber.next([
+            {"id": 1, "title": "My Post"},
+          ])
+        } else {
+          subscriber.next(result);
+        }
+      });
+    });
+  }
+
   savePost(post: Post) {
     return Observable.create(subscriber => {
       const keys = golos.auth.getPrivateKeys(
@@ -18,7 +41,6 @@ export class GolosApiService {
         GolosSettings.password,
         ['posting']);
       const wif = keys.posting;
-      debugger;
       golos.broadcast.comment(wif,
         post.parentAuthor,
         post.parentPermlink,
@@ -39,9 +61,12 @@ export class GolosApiService {
     });
   }
 
-  findTags(query): Observable<Tag[]> {
+  findTags(): Observable<Tag[]> {
     return Observable.create(subscriber => {
-      golos.api.getDiscussionsByCreated(query, (err, result) => {
+      golos.api.getDiscussionsByCreated({
+        select_tags: [GolosSettings.tagParentPermlink],
+        limit: 100,
+      }, (err, result) => {
         if (!result || !result.length) {
           subscriber.next([
             {"id": 1, "itemName": "India"},
@@ -56,7 +81,7 @@ export class GolosApiService {
             {"id": 10, "itemName": "Sweden"}
           ])
         } else {
-          subscriber.next([]);
+          subscriber.next(result);
         }
       });
     });
