@@ -5,11 +5,26 @@
     <title>YourTarget</title>
 </head>
 <body>
+<form name="post">
+    <div>
+        <label>
+            Title <input name="title" placeholder="Post title...">
+        </label>
+    </div>
+    <div>
+        <label>
+            Picture <input type="file" name="picture">
+        </label>
+    </div>
+    <div>
+        <button type="button" id="post-btn">Post</button>
+    </div>
+</form>
+
 <input type="text" id="searching" />
 <button id="search-btn">Search</button>
 <br>
 <div>
-    <button id="post-btn">Post</button>
     <button id="vote-btn">Vote</button>
 </div>
 </body>

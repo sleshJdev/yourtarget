@@ -10,14 +10,20 @@ var password = 'qwerty12345'; // master password
 var keys = golos.auth.getPrivateKeys(username, password, ['posting']);
 var wif = keys.posting;
 console.log('getPrivateKeys', keys);
-console.log('is wif', golos.auth.isWif(keys.posting));
+console.log('is wif', golos.auth.isWif(wif));
+
+function $(selector, collection) {
+    if (collection === true) {
+        return document.querySelectorAll(selector);
+    } else {
+        return document.querySelector(selector);
+    }
+}
 
 window.onload = function () {
-    var voteBtn = document.querySelector('#vote-btn');
-    var postBtn = document.querySelector('#post-btn');
-    var searchBtn = document.querySelector('#search-btn');
+    var appName = 'yourtarget';
 
-    searchBtn.addEventListener('click', function () {
+    $('#search-btn').addEventListener('click', function () {
         var searching = document.querySelector('#searching').value;
 
         var query = {
@@ -26,27 +32,35 @@ window.onload = function () {
             //start_author: 'epexa',
             //start_permlink: 'test-url'
         };
-        golos.api.getDiscussionsByTrending(query, function(err, result) {
+        golos.api.getDiscussionsByTrending(query, function (err, result) {
             //console.log(err, result);
             if (!err) {
-                result.forEach(function(item) {
+                result.forEach(function (item) {
                     console.log('getDiscussionsByTrending', item.title);
                 });
             }
             else console.error(err);
         });
     });
-    voteBtn.addEventListener('click', function () {
 
+
+    $('#vote-btn').addEventListener('click', function () {
+        //[-1000, 1000]
+        golos.broadcast.vote(wif, username, 'youtarget6', 'test-url', 10000, function (err, result) {
+            console.log(err, result);
+        });
     });
-    postBtn.addEventListener('click', function () {
+
+    $('#post-btn').addEventListener('click', function () {
         var parentAuthor = '';
-        var parentPermlink = 'yourtarget';
+        var parentPermlink = appName;
         var author = username;
-        var permlink = 'test-url';
-        var title = 'test';
-        var body = 'test2';
-        var jsonMetadata = JSON.stringify('{tag1: 1, tag2: 2, tag3: 3}');
+        var permlink = appName + $('form').title.value;
+        var title = appName + $('form').picture.value;
+        var body = '<h1>' + $('form').title.value + '</h1>';
+        var jsonMetadata = JSON.stringify({
+            app: appName
+        });
         golos.broadcast.comment(wif, parentAuthor, parentPermlink, author, permlink, title, body, jsonMetadata, function (err, result) {
             //console.log(err, result);
             if (!err) {
