@@ -1,4 +1,4 @@
-<form [formGroup]="post">
+<form class="add-post" [formGroup]="post">
   <h2>Create Post</h2>
   <div>
     <label>
@@ -7,7 +7,7 @@
   </div>
   <div>
     <label>
-      Title <input type="file" name="title" formControlName="title">
+      Assets <input type="file" name="assets" formControlName="assets">
     </label>
   </div>
   <div>
@@ -16,11 +16,11 @@
       <angular2-multiselect [data]="dropdownList"
                             [ngModelOptions]="{standalone: true}"
                             [(ngModel)]="selectedItems"
-                            [settings]="dropdownSettings"
-                            (onSelect)="onItemSelect($event)"
-                            (onDeSelect)="OnItemDeSelect($event)"
-                            (onSelectAll)="onSelectAll($event)"
-                            (onDeSelectAll)="onDeSelectAll($event)"></angular2-multiselect>
+                            [settings]="dropdownSettings">
+      </angular2-multiselect>
     </label>
+  </div>
+  <div>
+    <button type="button" (click)="save()">Save</button>
   </div>
 </form>
