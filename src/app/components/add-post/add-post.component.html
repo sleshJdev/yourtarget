@@ -1,5 +1,26 @@
-<form>
+<form [formGroup]="post">
+  <h2>Create Post</h2>
   <div>
-    ad posts
+    <label>
+      Title <input type="text" name="title" formControlName="title">
+    </label>
+  </div>
+  <div>
+    <label>
+      Title <input type="file" name="title" formControlName="title">
+    </label>
+  </div>
+  <div>
+    <label>
+      Tags
+      <angular2-multiselect [data]="dropdownList"
+                            [ngModelOptions]="{standalone: true}"
+                            [(ngModel)]="selectedItems"
+                            [settings]="dropdownSettings"
+                            (onSelect)="onItemSelect($event)"
+                            (onDeSelect)="OnItemDeSelect($event)"
+                            (onSelectAll)="onSelectAll($event)"
+                            (onDeSelectAll)="onDeSelectAll($event)"></angular2-multiselect>
+    </label>
   </div>
 </form>
