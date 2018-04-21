@@ -36,22 +36,21 @@ export class AddPostComponent implements OnInit {
     this.golosApiService.findTags()
       .subscribe(response => {
         this.dropdownList = response;
-      });
+      }, error => console.log('add-post.component:error:', error));
   }
 
   save() {
-    const title = this.post.value.title;
     this.golosApiService.savePost({
-      parentAuthor: '',
-      parentPermlink: GolosSettings.postParentPermlink,
       author: GolosSettings.username,
-      permlink: `${GolosSettings.postParentPermlink}-${title}`,
-      title: title,
-      body: `<h1>${title}</h1>`,
-      jsonMetadata: JSON.stringify({
-        tags: this.selectedItems
-      })
-    }).subscribe();
+      title: this.post.value.title,
+      body: this.post.value.title,
+      jsonMetadata: {
+        app: GolosSettings.appName,
+        tags: ['asd']
+      }
+    }).subscribe(
+      response => console.log('add-post.component:response:', response),
+      error => console.log('add-post.component:error:', error));
   }
 
 }

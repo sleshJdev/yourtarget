@@ -6,19 +6,21 @@ import {GolosSettings} from "./golos-settings";
 
 @Injectable()
 export class GolosApiService {
+  wif: string;
+
   constructor() {
     golos.config.set('websocket', 'wss://ws.testnet.golos.io');
     golos.config.set('chain_id', '5876894a41e6361bde2e73278f07340f2eb8b41c2facd29099de9deef6cdb679');
+    const keys = golos.auth.getPrivateKeys(
+      GolosSettings.username,
+      GolosSettings.password,
+      ['posting']);
+    this.wif = keys.posting;
+    console.log(`keys: ${keys},\nwif: ${this.wif}`);
   }
 
   findPosts(tags) {
     return Observable.create(subscriber => {
-      const keys = golos.auth.getPrivateKeys(
-        GolosSettings.username,
-        GolosSettings.password,
-        ['posting']);
-      const wif = keys.posting;
-
       golos.api.getDiscussionsByCreated({
         select_tags: [GolosSettings.postParentPermlink],
         limit: 100,
@@ -34,29 +36,54 @@ export class GolosApiService {
     });
   }
 
+  private fix(permlink) {
+    return permlink.replace(/[^a-zA-Z0-9]+/g, '').toLowerCase();
+  }
+
+  saveTag(tag: Tag) {
+    return Observable.create(subscriber => {
+      golos.broadcast.comment(
+        this.wif,
+        '',
+        GolosSettings.tagParentPermlink,
+        tag.author,
+        `${this.fix(new Date().toISOString())} + -tag`,
+        `tag-${tag.id}`,
+        tag.itemName,
+        {},
+        function (err, result) {
+          debugger;
+          if (!err) {
+            console.log('golos-api-service:result:', result);
+            subscriber.next(result);
+          } else {
+            console.log('golos-api-service:error:', err);
+            subscriber.error(err);
+          }
+        });
+    });
+  }
+
   savePost(post: Post) {
     return Observable.create(subscriber => {
-      const keys = golos.auth.getPrivateKeys(
-        GolosSettings.username,
-        GolosSettings.password,
-        ['posting']);
-      const wif = keys.posting;
-      golos.broadcast.comment(wif,
-        post.parentAuthor,
-        post.parentPermlink,
+      golos.broadcast.comment(
+        this.wif,
+        '',
+        GolosSettings.postParentPermlink,
         post.author,
-        post.permlink,
+        this.fix(new Date().toISOString()) + '-post',
         post.title,
         post.body,
         post.jsonMetadata,
         function (err, result) {
           debugger;
           if (!err) {
-            console.log('golos-api-service:error:', result);
-            return subscriber.next(result);
+            console.log('golos-api-service:result:', result);
+            subscriber.next(result);
+          } else {
+            console.log('golos-api-service:error:', err);
+            subscriber.error(err);
           }
-          console.log('golos-api-service:error:', err);
-          subscriber.error(err);
         });
     });
   }
@@ -67,21 +94,21 @@ export class GolosApiService {
         select_tags: [GolosSettings.tagParentPermlink],
         limit: 100,
       }, (err, result) => {
-        if (!result || !result.length) {
-          subscriber.next([
-            {"id": 1, "itemName": "India"},
-            {"id": 2, "itemName": "Singapore"},
-            {"id": 3, "itemName": "Australia"},
-            {"id": 4, "itemName": "Canada"},
-            {"id": 5, "itemName": "South Korea"},
-            {"id": 6, "itemName": "Germany"},
-            {"id": 7, "itemName": "France"},
-            {"id": 8, "itemName": "Russia"},
-            {"id": 9, "itemName": "Italy"},
-            {"id": 10, "itemName": "Sweden"}
-          ])
+        if (!err) {
+          if (!result || !result.length) {
+            subscriber.next([
+              {id: 1, itemName: "cafe"},
+              {id: 2, itemName: "restaurant"},
+              {id: 3, itemName: "cafeteria"},
+            ])
+          } else {
+            console.log('golos-api:service:result: ', result);
+            subscriber.next(result);
+          }
         } else {
-          subscriber.next(result);
+          debugger;
+          console.log('golos-api.service:error:', err);
+          subscriber.error(err);
         }
       });
     });

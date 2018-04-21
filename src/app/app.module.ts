@@ -21,7 +21,6 @@ import { GolosApiService } from './common/golos-api.service';
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule,
     AngularMultiSelectModule,
     AppRouterModule
   ],
