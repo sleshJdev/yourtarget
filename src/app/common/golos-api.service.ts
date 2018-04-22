@@ -1,7 +1,5 @@
 import {Injectable} from '@angular/core';
-import Tag from "../model/Tag";
 import {Observable} from "rxjs/Observable";
-import Post from "../model/Post";
 import {GolosSettings} from "./golos-settings";
 
 @Injectable()
@@ -19,23 +17,48 @@ export class GolosApiService {
     console.log(`keys: ${keys},\nwif: ${this.wif}`);
   }
 
+  vote(post, tag, up = true) {
+    return Observable.create(subscriber => {
+      golos.broadcast.vote(
+        this.wif,
+        GolosSettings.username,
+        post.author,
+        post.permlink,
+        (up ? 1 : -1) * 5000,
+        (err, result) => {
+          if (!err) {
+            console.log('golos-api.service:vote:result:', result);
+            subscriber.next(result);
+          } else {
+            console.log('golos-api.service:vote:error:', err);
+            subscriber.error(err);
+          }
+        });
+    });
+  }
+
   findPosts(searchTags) {
+    debugger;
     return Observable.create(subscriber => {
       golos.api.getDiscussionsByCreated({
         select_tags: [GolosSettings.postParentPermlink],
         limit: 100,
       }, (err, result) => {
+        debugger;
         if (!err) {
           const filtered = result.filter(post => {
             post.json_metadata = JSON.parse(post.json_metadata);
-            post.json_metadata.tagValues = Object.entries(post.json_metadata.tags)
+            post.json_metadata.tagValues = Object
+              .entries(post.json_metadata.voteTags || [])
               .map(keyValuePair => keyValuePair[1]);
             return post.json_metadata.tagValues.every(tag =>
               !(searchTags || []).length || searchTags.includes(tag));
           });
+          console.log('golos-api.service:findPosts:result:', filtered);
           subscriber.next(filtered);
         } else {
-          subscriber.next(result);
+          console.log('golos-api.service:findPosts:error:', err);
+          subscriber.error(err);
         }
       });
     });
@@ -45,17 +68,19 @@ export class GolosApiService {
     return permlink.replace(/[^a-zA-Z0-9]+/g, '').toLowerCase();
   }
 
-  saveTag(tag: Tag) {
+  saveTag(tag: any) {
     return Observable.create(subscriber => {
       golos.broadcast.comment(
         this.wif,
         '',
         GolosSettings.tagParentPermlink,
         tag.author,
-        `${this.fix(new Date().toISOString())} + -tag`,
+        `${this.fix(new Date().toISOString())}-tag`,
         `tag-${tag.id}`,
         tag.itemName,
-        {},
+        Object.assign(
+          (tag.json_metadata || {}),
+          {tags: [GolosSettings.tagParentPermlink]}),
         function (err, result) {
           debugger;
           if (!err) {
@@ -69,7 +94,8 @@ export class GolosApiService {
     });
   }
 
-  savePost(post: Post) {
+  savePost(post: any) {
+    debugger;
     return Observable.create(subscriber => {
       golos.broadcast.comment(
         this.wif,
@@ -80,7 +106,7 @@ export class GolosApiService {
         post.title,
         post.body,
         post.jsonMetadata,
-        function (err, result) {
+        (err, result) => {
           debugger;
           if (!err) {
             console.log('golos-api-service:savePost:result:', result);

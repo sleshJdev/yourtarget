@@ -34,7 +34,15 @@
     </div>
     <div class="obj-title">{{post.title}}</div>
     <div class="obj-location">{{post.json_metadata.address}}</div>
-    <div class="obj-meta">метаданные: {{post.json_metadata.tagValues}}</div>
+    <div class="obj-meta">
+      метаданные:
+      <span class="post-tag"
+            *ngFor="let tagValue of post.json_metadata.tagValues">
+        {{tagValue.value}}
+        <div class="up-vote" (click)="upVote(post, tagValue)"></div>
+        <div class="down-vote" (click)="downVote(post, tagValue)"></div>
+      </span>
+    </div>
     <div class="obj-author">
       <div class="obj-tip">Описал место:</div>
       <div class="object-author-photo">

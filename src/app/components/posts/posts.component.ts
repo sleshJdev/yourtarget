@@ -19,4 +19,20 @@ export class PostsComponent implements OnInit {
       .subscribe(response => this.posts = response);
   }
 
+  upVote(post, tag) {
+    this.golosApiService
+      .vote(post, tag)
+      .subscribe(
+        response => console.log('voted for post id=', post.id),
+        error => console.log('error', error));
+  }
+
+  downVote(post, tag) {
+    this.golosApiService
+      .vote(post, tag)
+      .subscribe(
+        response => console.log('down voted for post id=', post.id, ', response: ', response),
+        error => console.log('error during down voting', error));
+  }
+
 }
