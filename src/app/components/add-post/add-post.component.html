@@ -1,16 +1,16 @@
 <form name="post-form" *ngIf="post" [formGroup]="post" class="create-object">
   <div class="ca-info">
-    <div class="ca-label">Добавить объект</div>
+    <div class="ca-label">Add object</div>
     <div class="ca-upload-image"></div>
     <div class="ca-title">
-      <input name="object_title" type="text" placeholder="Название" formControlName="title"/>
+      <input name="object_title" type="text" placeholder="Title of the object" formControlName="title"/>
     </div>
   </div>
   <div formGroupName="metadata" class="ca-meta">
     <!-- SELECT OPTION -->
-    <div class="ca-meta-title">Метаданные</div>
+    <div class="ca-meta-title">Metadata</div>
     <div class="ca-field">
-      <div class="ca-field-title">Адрес:</div>
+      <div class="ca-field-title">Address:</div>
       <div class="ca-field-select">
         <div class="ca-fs-input">
           <input type="text" name="type_object" formControlName="address"/>
@@ -33,7 +33,7 @@
       </div>
     </div>
     <span *ngIf="post.invalid" style="color: red">Please, fill out fields</span>
-    <div class="add_option" (click)="openNewPropertyForm = true">+ Создать свое поле</div>
+    <div class="add_option" (click)="openNewPropertyForm = true">+ Create a new field</div>
     <form name="tag-form" class="add-option-form" [formGroup]="tag" *ngIf="tag !== null && openNewPropertyForm">
       <div class="aof-input">
         <input type="text" name="option_name" placeholder="Название поля" formControlName="name"/>
@@ -41,11 +41,11 @@
       <div class="aof-input">
         <input type="text" name="option_value" placeholder="Значение поля" formControlName="value"/>
       </div>
-      <div class="aof-add" (click)="addNewProperty()">Добавить поле</div>
+      <div class="aof-add" (click)="addNewProperty()">Add field</div>
     </form>
     <div class="save_object">
-      <div (click)="save()">Добавить в граф</div>
+      <div (click)="save()">Add to classifier</div>
     </div>
-    <div class="tip_case">Какие преимущества дает автору, описавшему место?<br><a href="#">Подробнее >>></a></div>
+    <div class="tip_case">What are the advantages of the author who described the object?<br><a href="#">More >>></a></div>
   </div>
 </form>
