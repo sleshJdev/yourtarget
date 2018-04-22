@@ -44,7 +44,7 @@ float:left;
     color:#6d6d6d;
     font-size:13px;
     overflow-x:hidden;
-	
+
 }
 ol, ul {
 
@@ -78,19 +78,6 @@ textarea{resize:none;}
 [contenteditable="true"] {  outline: none;}
 [contenteditable="true"]:hover {  outline: none;}
 [contenteditable="true"]:focus {}
-
-
-@font-face {
-    font-family: Philosopher-Regular;
-    src: url(../fonts/DidactGothic-Regular.ttf);
-}
-
-@font-face {
-    font-family: Philosopher-Bold;
-    src: url(../fonts/DidactGothic-Regular.ttf);
-}
-
-
 
 
 .header {
@@ -136,7 +123,7 @@ textarea{resize:none;}
 	float:left;
 	background:#f2f2f2;
 	min-height:100px;
-	
+
 }
 
 
@@ -154,7 +141,7 @@ textarea{resize:none;}
 	width:320px;
 	float:left;
 	padding:36px 12px 36px 12px;
-	
+
 }
 .w-1280 {
 	width:1280px;
@@ -164,7 +151,7 @@ textarea{resize:none;}
 .r-arrow {
 	padding-right:50px;
 	background:url(images/r_arrow.png) top right no-repeat;
-	
+
 }
 
 .logo {
@@ -176,13 +163,13 @@ textarea{resize:none;}
 }
 .logo span {
 	color:#ac1cb5;
-	
+
 }
 
 .title {
 	font-size:26px;
 	color:#222;
-	
+
 }
 
 .description {
@@ -229,7 +216,7 @@ textarea{resize:none;}
 	float:left;
 	color:#222;
 	font-size:26px;
-	
+
 }
 
 .ca-upload-image {
@@ -264,7 +251,7 @@ textarea{resize:none;}
 	float:left;
 }
 .ca-meta-title {
-	
+
 	width:286px;
 	color:#000;
 	font-size:15px;
@@ -319,7 +306,7 @@ textarea{resize:none;}
 	top:0px;
 	left:0px;
 	height:40px;
-	
+
 }
 .ca-fs-input input {
 	padding:10px;
@@ -389,7 +376,7 @@ textarea{resize:none;}
 	font-size:13px;
 	color:#000;
 	margin-bottom:30px;
-	
+
 }
 .tip_case a{
 	color:#8638c2;
@@ -465,7 +452,7 @@ textarea{resize:none;}
 .obj-location {
 	width:286px;
 	float:left;
-	margin:0px 12px 12px 12px; 
+	margin:0px 12px 12px 12px;
 	color:#fff;
 	font-size:13px;
 	margin-bottom:20px;
@@ -473,7 +460,7 @@ textarea{resize:none;}
 .obj-meta {
 	width:286px;
 	float:left;
-	margin:0px 12px 12px 12px; 
+	margin:0px 12px 12px 12px;
 	color:#999;
 	font-size:13px;
 	min-height:150px;
@@ -497,7 +484,7 @@ textarea{resize:none;}
 	width:60px;
 	float:right;
 	margin:12px;
-	
+
 }
 .object-author-photo img {
 	width:60px;
@@ -505,7 +492,7 @@ textarea{resize:none;}
 }
 
 .content-wrapper {
-	
+
 	min-height:1000px;
 	background:#292929;
 	width:1280px;
@@ -514,7 +501,7 @@ textarea{resize:none;}
 
 .obj-meta-tag {
 	float:left;
-	
+
 }
 .obj-mt-name {
 	padding:10px;
@@ -523,7 +510,7 @@ textarea{resize:none;}
 }
 .obj-mt-select .obj-mt-name {
 	color:#c77ae3;
-	
+
 }
 .obj-mt-like {
 	float:left;
@@ -561,7 +548,7 @@ textarea{resize:none;}
 
 /* Footer */
 .footer-info {
-	
+
 	color:#888;
 	font-size:13px;
 	margin:12px;
