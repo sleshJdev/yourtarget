@@ -44,7 +44,7 @@ export class GolosApiService {
     if (up) {
       ++votedTag.upVote;
     } else {
-      ++votedTag.downVote;
+      --votedTag.downVote;
     }
     return this.savePost(post);
   }
