@@ -32,7 +32,6 @@
         </div>
       </div>
     </div>
-    <span *ngIf="post.invalid" style="color: red">Please, fill out fields</span>
     <div class="add_option" (click)="openNewPropertyForm = true">+ Create a new field</div>
     <form name="tag-form" class="add-option-form" [formGroup]="tag" *ngIf="tag !== null && openNewPropertyForm">
       <div class="aof-input">
@@ -42,6 +41,7 @@
         <input type="text" name="option_value" placeholder="Значение поля" formControlName="value"/>
       </div>
       <div class="aof-add" (click)="addNewProperty()">Add field</div>
+      <div class="aof-add" (click)="openNewPropertyForm = false">Cancel</div>
     </form>
     <div class="save_object">
       <div (click)="save()">Add to classifier</div>

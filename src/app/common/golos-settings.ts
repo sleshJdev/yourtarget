@@ -1,4 +1,4 @@
-const username = 'demo1111';
+const username = 'youtarget-97';
 const accounts = {
   'youtarget-1': 'P5JH7tmkiY8iamkyifnVWTjXMSE3jdgx8rVTgxgvjUecGBxwcd2L',
   'youtarget-2': 'P5K9GhH4yXD5KwKGRUSNWWcyghPT6CtjWZFeN9CwkhULWzPqdTEB',
@@ -10,7 +10,10 @@ const accounts = {
   'youtarget-10': 'P5K3mXoTH7Eghy7eMQEzTCSS4ckF7KHNFeCWvJouH4ZtuoPzTMUv',
   'youtarget-99': 'P5JgWym9AicUDxD3HB8BdNktke3p1hqQ7PEogEikCJXAGr9Z2FTb',
   'youtarget-98': 'P5JgWym9AicUDxD3HB8BdNktke3p1hqQ7PEogEikCJXAGr9Z2FTb',
+  'youtarget-97': 'P5K6mMVpT1E7RPGMzEFjFNFw8edP1iTRTiMJgpwf7G1vkHPNmmG3',
   'demo1111': 'P5JqfM33Ph6k8mh8pNJVE8TSzuPqvyC3ad7UFWbS2arC4eWLQXPd',
+  'my-first-user': 'P5K6mMVpT1E7RPGMzEFjFNFw8edP1iTRTiMJgpwf7G1vkHPNmmG3',
+  'my-first-user-1': 'P5K6mMVpT1E7RPGMzEFjFNFw8edP1iTRTiMJgpwf7G1vkHPNmmG3',
 };
 
 export class GolosSettings {

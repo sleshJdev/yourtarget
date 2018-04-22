@@ -64,12 +64,12 @@ export class AddPostComponent implements OnInit {
     this.golosApiService
       .saveTag(details)
       .subscribe(response => {
-        this.tags.push(tag);
-        const path = `metadata.voteTags`;
         debugger;
+        const path = `metadata.voteTags`;
         const voteTags = <FormGroup>this.post.get(path);
         voteTags.addControl(tag.label, new FormControl(tag.value, [Validators.required]));
         this.openNewPropertyForm = false;
+        this.tags.push(tag);
       });
   }
 
