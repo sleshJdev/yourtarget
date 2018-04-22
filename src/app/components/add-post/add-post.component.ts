@@ -21,7 +21,7 @@ export class AddPostComponent implements OnInit {
               private golosApiService: GolosApiService,
               private eventService: EventService) {
     this.tag = fb.group({
-      name: new FormControl('', [Validators.required]),
+      label: new FormControl('', [Validators.required]),
       value: new FormControl('', [Validators.required])
     });
   }
@@ -65,6 +65,10 @@ export class AddPostComponent implements OnInit {
       .saveTag(details)
       .subscribe(response => {
         this.tags.push(tag);
+        const path = `metadata.voteTags`;
+        debugger;
+        const voteTags = <FormGroup>this.post.get(path);
+        voteTags.addControl(tag.label, new FormControl(tag.value, [Validators.required]));
         this.openNewPropertyForm = false;
       });
   }
@@ -80,10 +84,11 @@ export class AddPostComponent implements OnInit {
     }
     debugger;
     const post = this.post.value;
+    debugger;
     post.metadata.voteTags = Object
       .entries(post.metadata.voteTags)
       .map(pair => ({
-        level: pair[0],
+        id: pair[0],
         value: pair[1],
         upVotes: 0,
         downVotes: 0,

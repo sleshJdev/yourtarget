@@ -20,7 +20,7 @@
     <div formGroupName="voteTags" *ngFor="let tag of tags" class="ca-field">
       <div class="ca-field-title">{{tag.label}}</div>
       <div class="ca-field-select">
-        <div class="ca-fs-input ca-fs-arrow">
+        <div class="ca-fs-input" [ngClass]="{'ca-fs-arrow': !!tag.values}">
           <input type="text" name="type_object" value="место" formControlName="{{tag.id}}"/>
         </div>
         <div class="ca-fs-list" *ngIf="tag.values">
@@ -36,7 +36,7 @@
     <div class="add_option" (click)="openNewPropertyForm = true">+ Create a new field</div>
     <form name="tag-form" class="add-option-form" [formGroup]="tag" *ngIf="tag !== null && openNewPropertyForm">
       <div class="aof-input">
-        <input type="text" name="option_name" placeholder="Название поля" formControlName="name"/>
+        <input type="text" name="option_name" placeholder="Название поля" formControlName="label"/>
       </div>
       <div class="aof-input">
         <input type="text" name="option_value" placeholder="Значение поля" formControlName="value"/>

@@ -90,11 +90,11 @@ export class GolosApiService {
         GolosSettings.tagParentPermlink,
         GolosSettings.username,
         this.fix(new Date().toISOString()) + '-tag',
-        tag.name,
+        tag.label,
         tag.value,
         {
           id: tag.id,
-          name: tag.name,
+          label: tag.label,
           value: tag.value
         },
         (err, result) => {
@@ -141,29 +141,21 @@ export class GolosApiService {
         select_tags: [GolosSettings.tagParentPermlink],
         limit: 100,
       }, (err, result) => {
-        return subscriber.next([
-          {id: 'tag1', label: 'Type of the object', values: ['Место', 'Собычно']},
-          {id: 'tag2', label: 'Place type', values: ['Кофейня', 'Ресторан', 'Бар']},
-          {id: 'tag3', label: 'Interior', values: ['Лофт', 'Классический', 'Креатив']},
-          {id: 'tag4', label: 'You can often meet', values: ['Хипстер', 'Айтишники', 'Творческие люди']},
-        ]);
-
-        // if (!err) {
-        //   if (!result || !result.length) {
-        //     subscriber.next([
-        //       {id: 1, itemName: "cafe"},
-        //       {id: 2, itemName: "restaurant"},
-        //       {id: 3, itemName: "cafeteria"},
-        //     ])
-        //   } else {
-        //     console.log('golos-api:service:result: ', result);
-        //     subscriber.next(result);
-        //   }
-        // } else {
-        //   debugger;
-        //   console.log('golos-api.service:error:', err);
-        //   subscriber.error(err);
-        // }
+        if (!err) {
+          debugger;
+          console.log('golos-api:service:result: ', result);
+          subscriber.next([
+            {id: 'tag1', label: 'Type of the object', values: ['Место', 'Собычно']},
+            {id: 'tag2', label: 'Place type', values: ['Кофейня', 'Ресторан', 'Бар']},
+            {id: 'tag3', label: 'Interior', values: ['Лофт', 'Классический', 'Креатив']},
+            {id: 'tag4', label: 'You can often meet', values: ['Хипстер', 'Айтишники', 'Творческие люди']},
+          ].concat((result || []).map(tag => {
+            return JSON.parse(tag.json_metadata);
+          })));
+        } else {
+          console.log('golos-api.service:error:', err);
+          subscriber.error(err);
+        }
       });
     });
   }
