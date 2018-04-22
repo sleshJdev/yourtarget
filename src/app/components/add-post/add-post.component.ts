@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import Tag from "../../model/Tag";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {GolosApiService} from "../../common/golos-api.service";
 import {GolosSettings} from "../../common/golos-settings";
 
@@ -11,46 +10,57 @@ import {GolosSettings} from "../../common/golos-settings";
 })
 export class AddPostComponent implements OnInit {
 
+  levels: any[];
+  levelTags: any[];
   post: FormGroup;
-  dropdownList: Tag[] = [];
-  selectedItems = [];
-  dropdownSettings = {
-    singleSelection: false,
-    text: "Select Countries",
-    selectAllText: 'Select All',
-    unSelectAllText: 'UnSelect All',
-    enableSearchFilter: true,
-    classes: "myclass custom-class"
-  };
 
-  constructor(fb: FormBuilder,
+  constructor(private fb: FormBuilder,
               private golosApiService: GolosApiService) {
-    this.post = fb.group({
-      title: new FormControl('', [Validators.required]),
-      assets: new FormControl(null, [Validators.required]),
-      tags: new FormArray([], [Validators.required])
-    });
   }
 
   ngOnInit() {
     this.golosApiService.findTags()
       .subscribe(response => {
-        this.dropdownList = response;
+        this.levels = Object.keys(response);
+        this.levelTags = response;
+        this.post = this.fb.group({
+          title: new FormControl('', [Validators.required]),
+          metadata: new FormGroup({
+            address: new FormControl('', [Validators.required]),
+            tags: this.fb.group(
+              this.levels.reduce((group, level) => {
+                const values = response[level].values;
+                group[level] = new FormControl('', [
+                  Validators.required,
+                  value => values.includes(value)
+                ]);
+                return group;
+              }, {}))
+          })
+        });
       }, error => console.log('add-post.component:error:', error));
   }
 
+  setTagValue(value, level) {
+    const path = `metadata.tags.${level}`;
+    this.post.get(path).setValue(value);
+  }
+
   save() {
+    if (this.post.invalid) {
+      return;
+    }
+    const post = this.post.value;
     this.golosApiService.savePost({
       author: GolosSettings.username,
-      title: this.post.value.title,
-      body: this.post.value.title,
-      jsonMetadata: {
-        app: GolosSettings.appName,
-        tags: this.selectedItems.map(it => it.itemName)
-      }
+      title: post.title,
+      body: post.title,
+      jsonMetadata: Object.assign({
+        app: GolosSettings.appName
+      }, post.metadata)
     }).subscribe(
-      response => console.log('add-post.component:response:', response),
-      error => console.log('add-post.component:error:', error));
+      response => console.log('add-post.component:save:response:', response),
+      error => console.log('add-post.component:save:error:', error));
   }
 
 }

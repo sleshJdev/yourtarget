@@ -1,26 +1,43 @@
-<form class="add-post" [formGroup]="post">
-  <h2>Create Post</h2>
-  <div>
-    <label>
-      Title <input type="text" name="title" formControlName="title">
-    </label>
+<form *ngIf="post" [formGroup]="post" class="create-object">
+  <div class="ca-info">
+    <div class="ca-label">Добавить объект</div>
+    <div class="ca-upload-image"></div>
+    <div class="ca-title">
+      <input name="object_title" type="text" placeholder="Название" formControlName="title"/>
+    </div>
   </div>
-  <div>
-    <label>
-      Assets <input type="file" name="assets" formControlName="assets">
-    </label>
-  </div>
-  <div>
-    <label>
-      Tags
-      <angular2-multiselect [data]="dropdownList"
-                            [ngModelOptions]="{standalone: true}"
-                            [(ngModel)]="selectedItems"
-                            [settings]="dropdownSettings">
-      </angular2-multiselect>
-    </label>
-  </div>
-  <div>
-    <button type="button" (click)="save()">Save</button>
+  <div formGroupName="metadata" class="ca-meta">
+    <!-- SELECT OPTION -->
+    <div class="ca-meta-title">Метаданные</div>
+    <div class="ca-field">
+      <div class="ca-field-title">Адрес:</div>
+      <div class="ca-field-select">
+        <div class="ca-fs-input">
+          <input type="text" name="type_object" formControlName="address"/>
+        </div>
+      </div>
+    </div>
+    <div formGroupName="tags" *ngFor="let level of levels" class="ca-field">
+      <div class="ca-field-title">{{levelTags[level].label}}</div>
+      <div class="ca-field-select">
+        <div class="ca-fs-input">
+          <input type="text" name="type_object" value="место" formControlName="{{level}}"/>
+        </div>
+        <div class="ca-fs-list">
+          <div class="ca-fs-option"
+               (click)="setTagValue(value, level)"
+               *ngFor="let value of levelTags[level].values">
+            {{value}}
+          </div>
+        </div>
+      </div>
+    </div>
+    {{post.value | json}}
+    <span *ngIf="post.invalid" style="color: red">Please, fill out fields</span>
+    <div class="add_option">+ Создать свое поле</div>
+    <div class="save_object">
+      <div (click)="save()">Добавить в граф</div>
+    </div>
+    <div class="tip_case">Какие преимущества дает автору, описавшему место?<br><a href="#">Подробнее >>></a></div>
   </div>
 </form>

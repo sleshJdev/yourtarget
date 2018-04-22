@@ -91,28 +91,36 @@ export class GolosApiService {
     });
   }
 
-  findTags(): Observable<Tag[]> {
+  findTags(): Observable<any[]> {
     return Observable.create(subscriber => {
       golos.api.getDiscussionsByCreated({
         select_tags: [GolosSettings.tagParentPermlink],
         limit: 100,
       }, (err, result) => {
-        if (!err) {
-          if (!result || !result.length) {
-            subscriber.next([
-              {id: 1, itemName: "cafe"},
-              {id: 2, itemName: "restaurant"},
-              {id: 3, itemName: "cafeteria"},
-            ])
-          } else {
-            console.log('golos-api:service:result: ', result);
-            subscriber.next(result);
-          }
-        } else {
-          debugger;
-          console.log('golos-api.service:error:', err);
-          subscriber.error(err);
-        }
+
+        return subscriber.next({
+          level1: {label: 'Тип объекта', values: ['Место', 'Собычно']},
+          level2: {label: 'Тип заведения', values: ['Кофейня', 'Ресторан', 'Бар']},
+          level3: {label: 'Интерьер', values: ['Лофт', 'Классический', 'Креатив']},
+          level4: {label: 'Часто можно встретить', values: ['Хипстер', 'Айтишники', 'Творческие люди']},
+        });
+
+        // if (!err) {
+        //   if (!result || !result.length) {
+        //     subscriber.next([
+        //       {id: 1, itemName: "cafe"},
+        //       {id: 2, itemName: "restaurant"},
+        //       {id: 3, itemName: "cafeteria"},
+        //     ])
+        //   } else {
+        //     console.log('golos-api:service:result: ', result);
+        //     subscriber.next(result);
+        //   }
+        // } else {
+        //   debugger;
+        //   console.log('golos-api.service:error:', err);
+        //   subscriber.error(err);
+        // }
       });
     });
   }
