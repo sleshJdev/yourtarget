@@ -3,6 +3,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {GolosApiService} from "../../common/golos-api.service";
 import {GolosSettings} from "../../common/golos-settings";
 import {EventService} from "../../common/event.service";
+import Actions from "../../common/actions";
 
 @Component({
   selector: 'app-add-post',
@@ -70,7 +71,7 @@ export class AddPostComponent implements OnInit {
     }).subscribe(
       response => {
         this.eventService.raise({
-          id: 'post:new',
+          id: Actions.POST_ADD,
           data: response
         });
         return console.log('add-post.component:save:response:', response);

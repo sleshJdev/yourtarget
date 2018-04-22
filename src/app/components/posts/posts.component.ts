@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {GolosApiService} from "../../common/golos-api.service";
 import {EventService} from "../../common/event.service";
+import Actions from "../../common/actions";
+import {Action} from "rxjs/scheduler/Action";
 
 @Component({
   selector: 'app-posts',
@@ -14,8 +16,8 @@ export class PostsComponent implements OnInit {
   constructor(private golosApiService: GolosApiService,
               eventService: EventService) {
     eventService.event.subscribe(event => {
-      debugger;
-      if (event.id === 'post:new') {
+      if (event.id === Actions.POST_ADD ||
+          event.id === Actions.POST_VOTE) {
         this.findPosts();
       }
     })
