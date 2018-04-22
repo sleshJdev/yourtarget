@@ -1,0 +1,49 @@
+<div class="search" *ngFor="let objectType of filter.objectType">
+  <div class="ca-meta-title">Настройки поиска</div>
+  <div class="ca-field">
+    <div class="ca-field-title">Адрес:</div>
+    <div class="ca-field-select">
+      <div class="ca-fs-input">
+        <input type="text" name="type_object"/>
+      </div>
+    </div>
+  </div>
+  <div class="ca-field">
+    <div class="ca-field-title">Тип объекта</div>
+    <div class="ca-field-select">
+      <div class="ca-fs-input">
+        <input type="text" name="type_object"/>
+      </div>
+      <div class="ca-fs-list">
+        <div class="ca-fs-option">{{objectType.typeValue}}</div>
+      </div>
+    </div>
+  </div>
+  <div class="ca-field">
+    <div class="ca-field-title">{{objectType.objectName}}</div>
+    <div class="ca-field-select">
+      <div class="ca-fs-input">
+        <input type="text" name="type_object"/>
+      </div>
+      <div class="ca-fs-list" *ngFor="let object of objectType.object">
+        <div class="ca-fs-option">{{object.objectValue}}</div>
+
+        <div class="ca-field" *ngFor="let criterion of object.criteria">
+          <div class="ca-field-title">{{criterion.criterionName}}</div>
+          <div class="ca-field-select">
+            <div class="ca-fs-input">
+              <input type="text" name="type_object"/>
+            </div>
+            <div class="ca-fs-list" *ngFor="let criterionValue of criterion.criterionValue">
+              <div class="ca-fs-option">{{criterionValue}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="add_option">+ Добавить еще критерий</div>
+  <div>
+    <button type="button" (click)="search()">Найти</button>
+  </div>
+</div>
