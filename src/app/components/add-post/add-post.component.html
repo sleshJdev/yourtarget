@@ -17,10 +17,11 @@
         </div>
       </div>
     </div>
+
     <div formGroupName="voteTags" *ngFor="let level of levels" class="ca-field">
       <div class="ca-field-title">{{levelTags[level].label}}</div>
       <div class="ca-field-select">
-        <div class="ca-fs-input">
+        <div class="ca-fs-input ca-fs-arrow">
           <input type="text" name="type_object" value="место" formControlName="{{level}}"/>
         </div>
         <div class="ca-fs-list">

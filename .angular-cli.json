@@ -20,7 +20,7 @@
       "prefix": "app",
       "styles": [
         "styles.css",
-        "./app/layout/css/template.css"
+        "./assets/template.css"
       ],
       "scripts": [
       ],

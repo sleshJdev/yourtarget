@@ -2,21 +2,35 @@
 <div class="object-list">
   <div class="object">
     <div class="obj-image">
-      <img src="css/images/image_1.jpg"/>
+      <img src="../../../assets/images/image_1.jpg"/>
     </div>
     <div class="obj-title">Кофейня “Мануфактура”</div>
     <div class="obj-location">Карла Маркса 17</div>
-    <div class="obj-meta">метаданные: кофейня, <span>Лофт</span>, Хипстер,
-      хорошее кофе
+    <div class="obj-meta">
+      <div class="obj-meta-tag">
+        <div class="obj-mt-name">кофейня</div>
+        <div class="obj-mt-like">1</div>
+        <div class="obj-mt-dislike">0</div>
+      </div>
+      <div class="obj-meta-tag obj-mt-select">
+        <div class="obj-mt-name">LOFT</div>
+        <div class="obj-mt-like">1</div>
+        <div class="obj-mt-dislike">0</div>
+      </div>
+      <div class="obj-meta-tag">
+        <div class="obj-mt-name">Хипстепр</div>
+        <div class="obj-mt-like">1</div>
+        <div class="obj-mt-dislike">0</div>
+      </div>
     </div>
     <div class="obj-author">
       <div class="obj-tip">Описал место:</div>
-      <div class="object-author-photo"><img src="css/images/author_1.jpg"/></div>
+      <div class="object-author-photo"><img src="../../../assets/images/author_1.jpg"/></div>
     </div>
   </div>
   <div class="object">
     <div class="obj-image">
-      <img src="css/images/image_1.jpg"/>
+      <img src="../../../assets/images/image_1.jpg"/>
     </div>
     <div class="obj-title">Кофейня “Мануфактура”</div>
     <div class="obj-location">Карла Маркса 17</div>
@@ -25,29 +39,28 @@
     </div>
     <div class="obj-author">
       <div class="obj-tip">Описал место:</div>
-      <div class="object-author-photo"><img src="css/images/author_1.jpg"/></div>
+      <div class="object-author-photo"><img src="../../../assets/images/author_1.jpg"/></div>
     </div>
   </div>
   <div *ngFor="let post of posts" class="object">
     <div class="obj-image">
-      <img src="css/images/image_1.jpg"/>
+      <img src="../../../assets/images/image_1.jpg"/>
     </div>
     <div class="obj-title">{{post.title}}</div>
     <div class="obj-location">{{post.json_metadata.address}}</div>
     <div class="obj-meta">
-      метаданные:
-      <span class="post-tag"
-            *ngFor="let tagValue of post.json_metadata.tagValues">
-        {{tagValue.value}}
-        <div class="up-vote" (click)="upVote(post, tagValue)"></div>
-        <div class="down-vote" (click)="downVote(post, tagValue)"></div>
-      </span>
+      <div class="obj-meta-tag obj-mt-select"
+           *ngFor="let tagValue of post.json_metadata.tagValues">
+        <div class="obj-mt-name">{{tagValue.value}}</div>
+        <div class="obj-mt-like" (click)="upVote(post, tagValue)">{{tagValue.upVotes}}</div>
+        <div class="obj-mt-dislike" (click)="downVote(post, tagValue)">{{tagValue.downVotes}}</div>
+      </div>
     </div>
     <div class="obj-author">
       <div class="obj-tip">Описал место:</div>
       <div class="object-author-photo">
         {{post.author}}
-        <img src="css/images/author_1.jpg"/>
+        <img src="../../../assets/images/author_1.jpg"/>
       </div>
     </div>
   </div>
