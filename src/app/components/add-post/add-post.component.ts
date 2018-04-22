@@ -12,31 +12,37 @@ import Actions from "../../common/actions";
 })
 export class AddPostComponent implements OnInit {
 
-  levels: any[];
-  levelTags: any[];
   post: FormGroup;
+  tag: FormGroup;
+  tags: any[];
+  openNewPropertyForm = false;
 
   constructor(private fb: FormBuilder,
               private golosApiService: GolosApiService,
               private eventService: EventService) {
+    this.tag = fb.group({
+      name: new FormControl('', [Validators.required]),
+      value: new FormControl('', [Validators.required])
+    });
   }
 
   ngOnInit() {
     this.golosApiService.findTags()
-      .subscribe(response => {
-        this.levels = Object.keys(response);
-        this.levelTags = response;
-        this.post = this.fb.group({
+      .subscribe(tags => {
+        debugger;
+        this.tags = tags;
+        return this.post = this.fb.group({
           title: new FormControl('', [Validators.required]),
           metadata: new FormGroup({
             address: new FormControl('', [Validators.required]),
             voteTags: this.fb.group(
-              this.levels.reduce((group, level) => {
-                const values = response[level].values;
-                group[level] = new FormControl('', [
-                  Validators.required,
-                  value => values.includes(value)
-                ]);
+              tags.reduce((group, tag) => {
+                debugger;
+                const validators = [Validators.required];
+                if (tag.values) {
+                  validators.push(value => tag.values.includes(value));
+                }
+                group[tag.id] = new FormControl('', validators);
                 return group;
               }, {}))
           })
@@ -44,8 +50,27 @@ export class AddPostComponent implements OnInit {
       }, error => console.log('add-post.component:error:', error));
   }
 
-  setTagValue(value, level) {
-    const path = `metadata.voteTags.${level}`;
+  addNewProperty() {
+    if (this.tag.invalid) {
+      return;
+    }
+    debugger;
+    const tag = Object.assign(
+      {id: `tag${this.tags.length}`},
+      this.tag.value);
+    const details = Object.assign({
+      author: GolosSettings.username,
+    }, tag);
+    this.golosApiService
+      .saveTag(details)
+      .subscribe(response => {
+        this.tags.push(tag);
+        this.openNewPropertyForm = false;
+      });
+  }
+
+  setTagValue(value, id) {
+    const path = `metadata.voteTags.${id}`;
     this.post.get(path).setValue(value);
   }
 
@@ -53,6 +78,7 @@ export class AddPostComponent implements OnInit {
     if (this.post.invalid) {
       return;
     }
+    debugger;
     const post = this.post.value;
     post.metadata.voteTags = Object
       .entries(post.metadata.voteTags)

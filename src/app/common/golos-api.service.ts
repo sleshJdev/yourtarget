@@ -82,19 +82,18 @@ export class GolosApiService {
   }
 
   saveTag(tag: any) {
+    debugger;
     return Observable.create(subscriber => {
       golos.broadcast.comment(
         this.wif,
         '',
         GolosSettings.tagParentPermlink,
-        tag.author,
-        `${this.fix(new Date().toISOString())}-tag`,
-        `tag-${tag.id}`,
-        tag.itemName,
-        Object.assign(
-          (tag.json_metadata || {}),
-          {tags: [GolosSettings.tagParentPermlink]}),
-        function (err, result) {
+        GolosSettings.username,
+        this.fix(new Date().toISOString()) + '-tag',
+        `tag123`,
+        `<div>tag</div>`,
+        '{\"value\":123}',
+        (err, result) => {
           debugger;
           if (!err) {
             console.log('golos-api-service:result:', result);
@@ -132,19 +131,18 @@ export class GolosApiService {
     });
   }
 
-  findTags(): Observable<any[]> {
+  findTags(): Observable<any> {
     return Observable.create(subscriber => {
       golos.api.getDiscussionsByCreated({
         select_tags: [GolosSettings.tagParentPermlink],
         limit: 100,
       }, (err, result) => {
-
-        return subscriber.next({
-          level1: {label: 'Тип объекта', values: ['Место', 'Собычно']},
-          level2: {label: 'Тип заведения', values: ['Кофейня', 'Ресторан', 'Бар']},
-          level3: {label: 'Интерьер', values: ['Лофт', 'Классический', 'Креатив']},
-          level4: {label: 'Часто можно встретить', values: ['Хипстер', 'Айтишники', 'Творческие люди']},
-        });
+        return subscriber.next([
+          {id: 'tag1', label: 'Тип объекта', values: ['Место', 'Собычно']},
+          {id: 'tag2', label: 'Тип заведения', values: ['Кофейня', 'Ресторан', 'Бар']},
+          {id: 'tag3', label: 'Интерьер', values: ['Лофт', 'Классический', 'Креатив']},
+          {id: 'tag4', label: 'Часто можно встретить', values: ['Хипстер', 'Айтишники', 'Творческие люди']},
+        ]);
 
         // if (!err) {
         //   if (!result || !result.length) {

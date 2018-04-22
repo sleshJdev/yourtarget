@@ -1,4 +1,4 @@
-<form *ngIf="post" [formGroup]="post" class="create-object">
+<form name="post-form" *ngIf="post" [formGroup]="post" class="create-object">
   <div class="ca-info">
     <div class="ca-label">Добавить объект</div>
     <div class="ca-upload-image"></div>
@@ -17,24 +17,32 @@
         </div>
       </div>
     </div>
-
-    <div formGroupName="voteTags" *ngFor="let level of levels" class="ca-field">
-      <div class="ca-field-title">{{levelTags[level].label}}</div>
+    <div formGroupName="voteTags" *ngFor="let tag of tags" class="ca-field">
+      <div class="ca-field-title">{{tag.label}}</div>
       <div class="ca-field-select">
         <div class="ca-fs-input ca-fs-arrow">
-          <input type="text" name="type_object" value="место" formControlName="{{level}}"/>
+          <input type="text" name="type_object" value="место" formControlName="{{tag.id}}"/>
         </div>
-        <div class="ca-fs-list">
+        <div class="ca-fs-list" *ngIf="tag.values">
           <div class="ca-fs-option"
-               (click)="setTagValue(value, level)"
-               *ngFor="let value of levelTags[level].values">
+               *ngFor="let value of tag.values"
+               (click)="setTagValue(value, tag.id)">
             {{value}}
           </div>
         </div>
       </div>
     </div>
     <span *ngIf="post.invalid" style="color: red">Please, fill out fields</span>
-    <div class="add_option">+ Создать свое поле</div>
+    <div class="add_option" (click)="openNewPropertyForm = true">+ Создать свое поле</div>
+    <form name="tag-form" class="add-option-form" [formGroup]="tag" *ngIf="tag !== null && openNewPropertyForm">
+      <div class="aof-input">
+        <input type="text" name="option_name" placeholder="Название поля" formControlName="name"/>
+      </div>
+      <div class="aof-input">
+        <input type="text" name="option_value" placeholder="Значение поля" formControlName="value"/>
+      </div>
+      <div class="aof-add" (click)="addNewProperty()">Добавить поле</div>
+    </form>
     <div class="save_object">
       <div (click)="save()">Добавить в граф</div>
     </div>

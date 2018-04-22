@@ -83,7 +83,7 @@ export class SearchComponent implements OnInit {
         }]
       }
     );
-    golos.broadcast.comment(this.app.wif, parentAuthor, parentPermlink, author, permlink, title, body, jsonMetadata,
+    golos.broadcast.comment('', parentAuthor, parentPermlink, author, permlink, title, body, jsonMetadata,
       function (err, result) {
         //console.log(err, result);
         if (!err) {
