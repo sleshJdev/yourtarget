@@ -120,7 +120,7 @@ textarea{resize:none;}
 
 .object-list {
 	width:640px;
-	min-height:700px;
+  min-height:1000px;
 	background:#292929;
 	float:left;
 }
