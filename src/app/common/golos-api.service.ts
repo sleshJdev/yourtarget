@@ -27,6 +27,7 @@ export class GolosApiService {
         (up ? 1 : -1) * 5000,
         (err, result) => {
           if (!err) {
+            debugger;
             console.log('golos-api.service:vote:result:', result);
             this.changeVotesAndUpdatePost(post, tag, up).subscribe(subscriber);
           } else {
@@ -39,12 +40,12 @@ export class GolosApiService {
 
   private changeVotesAndUpdatePost(post, tag, up) {
     debugger;
-    const votedTag = post.metadata.voteTags.find(
+    const votedTag = post.json_metadata.voteTags.find(
       it => it === tag || it.level === tag.level);
     if (up) {
-      ++votedTag.upVote;
+      ++votedTag.upVotes;
     } else {
-      --votedTag.downVote;
+      --votedTag.downVotes;
     }
     return this.savePost(post);
   }

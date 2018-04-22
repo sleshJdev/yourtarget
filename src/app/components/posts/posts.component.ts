@@ -35,7 +35,7 @@ export class PostsComponent implements OnInit {
 
   upVote(post, tag) {
     this.golosApiService
-      .vote(post, tag)
+      .vote(post, tag, true)
       .subscribe(
         response => console.log('voted for post id=', post.id),
         error => console.log('error', error));
@@ -43,7 +43,7 @@ export class PostsComponent implements OnInit {
 
   downVote(post, tag) {
     this.golosApiService
-      .vote(post, tag)
+      .vote(post, tag, false)
       .subscribe(
         response => console.log('down voted for post id=', post.id, ', response: ', response),
         error => console.log('error during down voting', error));
