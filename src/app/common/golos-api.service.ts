@@ -90,9 +90,13 @@ export class GolosApiService {
         GolosSettings.tagParentPermlink,
         GolosSettings.username,
         this.fix(new Date().toISOString()) + '-tag',
-        `tag123`,
-        `<div>tag</div>`,
-        '{\"value\":123}',
+        tag.name,
+        tag.value,
+        {
+          id: tag.id,
+          name: tag.name,
+          value: tag.value
+        },
         (err, result) => {
           debugger;
           if (!err) {
