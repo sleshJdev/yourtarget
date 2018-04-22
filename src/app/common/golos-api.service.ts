@@ -142,10 +142,10 @@ export class GolosApiService {
         limit: 100,
       }, (err, result) => {
         return subscriber.next([
-          {id: 'tag1', label: 'Тип объекта', values: ['Место', 'Собычно']},
-          {id: 'tag2', label: 'Тип заведения', values: ['Кофейня', 'Ресторан', 'Бар']},
-          {id: 'tag3', label: 'Интерьер', values: ['Лофт', 'Классический', 'Креатив']},
-          {id: 'tag4', label: 'Часто можно встретить', values: ['Хипстер', 'Айтишники', 'Творческие люди']},
+          {id: 'tag1', label: 'Type of the object', values: ['Место', 'Собычно']},
+          {id: 'tag2', label: 'Place type', values: ['Кофейня', 'Ресторан', 'Бар']},
+          {id: 'tag3', label: 'Interior', values: ['Лофт', 'Классический', 'Креатив']},
+          {id: 'tag4', label: 'You can often meet', values: ['Хипстер', 'Айтишники', 'Творческие люди']},
         ]);
 
         // if (!err) {
