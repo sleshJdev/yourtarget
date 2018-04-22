@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {GolosApiService} from "../../common/golos-api.service";
 
 @Component({
   selector: 'app-posts',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PostsComponent implements OnInit {
 
-  constructor() { }
+  posts: any[];
+
+  constructor(private golosApiService: GolosApiService) {
+  }
 
   ngOnInit() {
+    this.golosApiService
+      .findPosts([])
+      .subscribe(response => this.posts = response);
   }
 
 }

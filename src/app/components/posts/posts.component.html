@@ -1,3 +1,48 @@
-<p>
-  posts works!
-</p>
+<!-- OBJECTS LIST -->
+<div class="content-wrapper">
+  <div class="object-list">
+    <div class="object">
+      <div class="obj-image">
+        <img src="css/images/image_1.jpg"/>
+      </div>
+      <div class="obj-title">Кофейня “Мануфактура”</div>
+      <div class="obj-location">Карла Маркса 17</div>
+      <div class="obj-meta">метаданные: кофейня, <span>Лофт</span>, Хипстер,
+        хорошее кофе
+      </div>
+      <div class="obj-author">
+        <div class="obj-tip">Описал место:</div>
+        <div class="object-author-photo"><img src="css/images/author_1.jpg"/></div>
+      </div>
+    </div>
+    <div class="object">
+      <div class="obj-image">
+        <img src="css/images/image_1.jpg"/>
+      </div>
+      <div class="obj-title">Кофейня “Мануфактура”</div>
+      <div class="obj-location">Карла Маркса 17</div>
+      <div class="obj-meta">метаданные: кофейня, <span>Лофт</span>, Хипстер,
+        хорошее кофе
+      </div>
+      <div class="obj-author">
+        <div class="obj-tip">Описал место:</div>
+        <div class="object-author-photo"><img src="css/images/author_1.jpg"/></div>
+      </div>
+    </div>
+    <div *ngFor="let post of posts" class="object">
+      <div class="obj-image">
+        <img src="css/images/image_1.jpg"/>
+      </div>
+      <div class="obj-title">{{post.title}}</div>
+      <div class="obj-location">{{post.json_metadata.address}}</div>
+      <div class="obj-meta">метаданные: {{post.json_metadata.tags}}</div>
+      <div class="obj-author">
+        <div class="obj-tip">Описал место:</div>
+        <div class="object-author-photo">
+          {{post.author}}
+          <img src="css/images/author_1.jpg"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -25,10 +25,13 @@ export class GolosApiService {
         select_tags: [GolosSettings.postParentPermlink],
         limit: 100,
       }, (err, result) => {
-        if (!result || !result.length) {
-          subscriber.next([
-            {"id": 1, "title": "My Post"},
-          ])
+        if (!err) {
+          const filtered = result.filter(post => {
+            post.json_metadata = JSON.parse(post.json_metadata);
+            return post.json_metadata.tags.every(
+              tag => !(tags || []).length || tags.includes(tag));
+          });
+          subscriber.next(filtered);
         } else {
           subscriber.next(result);
         }

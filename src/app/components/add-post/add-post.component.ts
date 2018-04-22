@@ -46,7 +46,7 @@ export class AddPostComponent implements OnInit {
       body: this.post.value.title,
       jsonMetadata: {
         app: GolosSettings.appName,
-        tags: ['asd']
+        tags: this.selectedItems.map(it => it.itemName)
       }
     }).subscribe(
       response => console.log('add-post.component:response:', response),

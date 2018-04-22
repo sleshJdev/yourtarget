@@ -19,7 +19,7 @@ const accounts = {
 export class GolosSettings {
   static username: string = username;
   static password: string = accounts[username];
-  static appName: string = 'yourtarget';
+  static appName: string = 'your-target';
   static postParentPermlink: string = 'yourtarget-post';
   static tagParentPermlink: string = 'yourtarget-tag';
 }
