@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {GolosApiService} from "../../common/golos-api.service";
+import {EventService} from "../../common/event.service";
 
 @Component({
   selector: 'app-posts',
@@ -10,10 +11,21 @@ export class PostsComponent implements OnInit {
 
   posts: any[];
 
-  constructor(private golosApiService: GolosApiService) {
+  constructor(private golosApiService: GolosApiService,
+              eventService: EventService) {
+    eventService.event.subscribe(event => {
+      debugger;
+      if (event.id === 'post:new') {
+        this.findPosts();
+      }
+    })
   }
 
   ngOnInit() {
+    this.findPosts();
+  }
+
+  private findPosts() {
     this.golosApiService
       .findPosts([])
       .subscribe(response => this.posts = response);

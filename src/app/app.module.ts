@@ -10,6 +10,7 @@ import {AngularMultiSelectModule} from 'angular2-multiselect-dropdown/angular2-m
 import {SearchComponent} from "./components/search/search.component";
 import {GolosApiService} from './common/golos-api.service';
 import {PostsComponent} from './components/posts/posts.component';
+import { EventService } from './common/event.service';
 
 
 @NgModule({
@@ -27,7 +28,7 @@ import {PostsComponent} from './components/posts/posts.component';
     AngularMultiSelectModule,
     AppRouterModule
   ],
-  providers: [GolosApiService],
+  providers: [GolosApiService, EventService],
   bootstrap: [AppComponent]
 })
 

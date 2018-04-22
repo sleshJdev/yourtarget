@@ -23,73 +23,75 @@
 </div>
 <div class="content">
   <div class="w-1280">
-    <app-add-post></app-add-post>
-    <router-outlet></router-outlet>
-    <!-- SEARCH OPTIONS -->
-    <div class="search">
-      <!-- SELECT OPTION -->
-      <div class="ca-meta-title">Настройки поиска</div>
-      <div class="ca-field">
-        <div class="ca-field-title">Адрес:</div>
-        <div class="ca-field-select">
-          <div class="ca-fs-input">
-            <input type="text" name="type_object"/>
+    <div class="content-wrapper">
+      <app-add-post></app-add-post>
+      <router-outlet></router-outlet>
+      <!-- SEARCH OPTIONS -->
+      <div class="search">
+        <!-- SELECT OPTION -->
+        <div class="ca-meta-title">Настройки поиска</div>
+        <div class="ca-field">
+          <div class="ca-field-title">Адрес:</div>
+          <div class="ca-field-select">
+            <div class="ca-fs-input">
+              <input type="text" name="type_object"/>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="ca-field">
-        <div class="ca-field-title">Тип объекта</div>
-        <div class="ca-field-select">
-          <div class="ca-fs-input">
-            <input type="text" name="type_object" value="место"/>
-          </div>
-          <div class="ca-fs-list">
-            <div class="ca-fs-option">Место</div>
-            <div class="ca-fs-option">Собычно</div>
-          </div>
-        </div>
-      </div>
-      <div class="ca-field">
-        <div class="ca-field-title">Тип заведения</div>
-        <div class="ca-field-select">
-          <div class="ca-fs-input">
-            <input type="text" name="type_object" value="Кофейня"/>
-          </div>
-          <div class="ca-fs-list">
-            <div class="ca-fs-option">Кофейня</div>
-            <div class="ca-fs-option">Ресторан</div>
-            <div class="ca-fs-option">бар</div>
+        <div class="ca-field">
+          <div class="ca-field-title">Тип объекта</div>
+          <div class="ca-field-select">
+            <div class="ca-fs-input">
+              <input type="text" name="type_object" value="место"/>
+            </div>
+            <div class="ca-fs-list">
+              <div class="ca-fs-option">Место</div>
+              <div class="ca-fs-option">Собычно</div>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="ca-field">
-        <div class="ca-field-title">Интерьер:</div>
-        <div class="ca-field-select">
-          <div class="ca-fs-input">
-            <input type="text" name="type_object" value="Лофт"/>
-          </div>
-          <div class="ca-fs-list">
-            <div class="ca-fs-option">Лофт</div>
-            <div class="ca-fs-option">Классический</div>
-            <div class="ca-fs-option">Креатив</div>
-          </div>
-        </div>
-      </div>
-      <div class="ca-field">
-        <div class="ca-field-title">Часто можно встретить:</div>
-        <div class="ca-field-select">
-          <div class="ca-fs-input">
-            <input type="text" name="type_object" value="Хипстер"/>
-          </div>
-          <div class="ca-fs-list">
-            <div class="ca-fs-option">Хипстер</div>
-            <div class="ca-fs-option">Айтишники</div>
-            <div class="ca-fs-option">Творческие люди</div>
-            <div class="ca-fs-option">Деловые люди</div>
+        <div class="ca-field">
+          <div class="ca-field-title">Тип заведения</div>
+          <div class="ca-field-select">
+            <div class="ca-fs-input">
+              <input type="text" name="type_object" value="Кофейня"/>
+            </div>
+            <div class="ca-fs-list">
+              <div class="ca-fs-option">Кофейня</div>
+              <div class="ca-fs-option">Ресторан</div>
+              <div class="ca-fs-option">бар</div>
+            </div>
           </div>
         </div>
+        <div class="ca-field">
+          <div class="ca-field-title">Интерьер:</div>
+          <div class="ca-field-select">
+            <div class="ca-fs-input">
+              <input type="text" name="type_object" value="Лофт"/>
+            </div>
+            <div class="ca-fs-list">
+              <div class="ca-fs-option">Лофт</div>
+              <div class="ca-fs-option">Классический</div>
+              <div class="ca-fs-option">Креатив</div>
+            </div>
+          </div>
+        </div>
+        <div class="ca-field">
+          <div class="ca-field-title">Часто можно встретить:</div>
+          <div class="ca-field-select">
+            <div class="ca-fs-input">
+              <input type="text" name="type_object" value="Хипстер"/>
+            </div>
+            <div class="ca-fs-list">
+              <div class="ca-fs-option">Хипстер</div>
+              <div class="ca-fs-option">Айтишники</div>
+              <div class="ca-fs-option">Творческие люди</div>
+              <div class="ca-fs-option">Деловые люди</div>
+            </div>
+          </div>
+        </div>
+        <div class="add_option">+ Добавить еще критерий</div>
       </div>
-      <div class="add_option">+ Добавить еще критерий</div>
     </div>
   </div>
 </div>

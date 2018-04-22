@@ -28,13 +28,25 @@ export class GolosApiService {
         (err, result) => {
           if (!err) {
             console.log('golos-api.service:vote:result:', result);
-            subscriber.next(result);
+            this.changeVotesAndUpdatePost(post, tag, up).subscribe(subscriber);
           } else {
             console.log('golos-api.service:vote:error:', err);
             subscriber.error(err);
           }
         });
     });
+  }
+
+  private changeVotesAndUpdatePost(post, tag, up) {
+    debugger;
+    const votedTag = post.metadata.voteTags.find(
+      it => it === tag || it.level === tag.level);
+    if (up) {
+      ++votedTag.upVote;
+    } else {
+      ++votedTag.downVote;
+    }
+    return this.savePost(post);
   }
 
   findPosts(searchTags) {

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {GolosApiService} from "../../common/golos-api.service";
 import {GolosSettings} from "../../common/golos-settings";
+import {EventService} from "../../common/event.service";
 
 @Component({
   selector: 'app-add-post',
@@ -15,7 +16,8 @@ export class AddPostComponent implements OnInit {
   post: FormGroup;
 
   constructor(private fb: FormBuilder,
-              private golosApiService: GolosApiService) {
+              private golosApiService: GolosApiService,
+              private eventService: EventService) {
   }
 
   ngOnInit() {
@@ -66,7 +68,13 @@ export class AddPostComponent implements OnInit {
       body: `<div>${post.title}</div>`,
       jsonMetadata: post.metadata
     }).subscribe(
-      response => console.log('add-post.component:save:response:', response),
+      response => {
+        this.eventService.raise({
+          id: 'post:new',
+          data: response
+        });
+        return console.log('add-post.component:save:response:', response);
+      },
       error => console.log('add-post.component:save:error:', error));
   }
 
