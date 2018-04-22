@@ -19,7 +19,7 @@ export class GolosApiService {
     console.log(`keys: ${keys},\nwif: ${this.wif}`);
   }
 
-  findPosts(tags) {
+  findPosts(searchTags) {
     return Observable.create(subscriber => {
       golos.api.getDiscussionsByCreated({
         select_tags: [GolosSettings.postParentPermlink],
@@ -28,8 +28,10 @@ export class GolosApiService {
         if (!err) {
           const filtered = result.filter(post => {
             post.json_metadata = JSON.parse(post.json_metadata);
-            return post.json_metadata.tags.every(
-              tag => !(tags || []).length || tags.includes(tag));
+            post.json_metadata.tagValues = Object.entries(post.json_metadata.tags)
+              .map(keyValuePair => keyValuePair[1]);
+            return post.json_metadata.tagValues.every(tag =>
+              !(searchTags || []).length || searchTags.includes(tag));
           });
           subscriber.next(filtered);
         } else {
@@ -81,10 +83,10 @@ export class GolosApiService {
         function (err, result) {
           debugger;
           if (!err) {
-            console.log('golos-api-service:result:', result);
+            console.log('golos-api-service:savePost:result:', result);
             subscriber.next(result);
           } else {
-            console.log('golos-api-service:error:', err);
+            console.log('golos-api-service:savePost:error:', err);
             subscriber.error(err);
           }
         });
